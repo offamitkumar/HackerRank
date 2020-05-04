@@ -49,6 +49,7 @@ int main(void){
             int sum = arr[i-1][j-1]+arr[i-1][j]+arr[i-1][j+1]+arr[i][j]+arr[i+1][j-1]+arr[i+1][j]+arr[i+1][j+1];
             ans = max(sum,ans);
         }
+    
     }
     cout<<ans<<'\n';
     return 0;
