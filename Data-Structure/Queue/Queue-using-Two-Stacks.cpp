@@ -1,22 +1,35 @@
 #include <cmath>
 #include <cstdio>
-#include <vector>
+#include <stack>
 #include <iostream>
 #include <algorithm>
 using namespace std;
 
 struct Queue{
     private:
-        vector<int>v;
+        stack<int>eq; // for enqueue
+        stack<int>dq; // for dequeue
     public:
         void push(int x){
-            v.push_back(x);
+            eq.push(x);
         }
         void pop(void){
-            v.erase(v.begin());
+            if(dq.empty()){
+                while(!eq.empty()){
+                    dq.push(eq.top());
+                    eq.pop();
+                }
+            }
+            dq.pop();
         }
         int front(void){
-            return *v.begin();
+            if(dq.empty()){
+                while(!eq.empty()){
+                    dq.push(eq.top());
+                    eq.pop();
+                }
+            }
+            return dq.top();
         }
 };
 
