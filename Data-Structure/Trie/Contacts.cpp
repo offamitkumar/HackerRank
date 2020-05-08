@@ -1,0 +1,89 @@
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#include <cstdio>
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <utility>
+#include <queue>
+#include <stack>
+#include <string>
+#include <cstring>
+#include <cmath>
+#include <map>
+#include <vector>
+#include <array>
+#include <set>
+#include <climits>
+#include <sstream>
+#include <iomanip>
+#include <cassert>
+#include <bitset>
+#include <numeric>
+using namespace std;
+using namespace __gnu_pbds;
+typedef tree< // find_by_order & order_of_key
+        int ,
+        null_type ,
+        less<int> ,
+        rb_tree_tag ,
+        tree_order_statistics_node_update 
+> new_set;
+#define MOD 1000000007
+struct Node{
+    Node* arr[30] = { nullptr };
+    int counter{};
+};
+Node*root;
+void store(const string&s){
+    int i=0;
+    Node*temp = root;
+    while(i<(int)s.size()){
+        if(root->arr[s[i]-'a']==nullptr){
+            root->arr[s[i]-'a'] = new Node();
+            root->arr[s[i]-'a']->counter++;
+            root = root->arr[s[i]-'a'];
+        }else{
+            root->arr[s[i]-'a']->counter++;
+            root = root->arr[s[i]-'a'];
+        }
+        i++;
+    }
+    root = temp;
+}
+int get(const string&s){
+    int i=0;
+    Node*Root = root;
+    while(i<(int)s.size()){
+        if(Root->arr[s[i]-'a']==nullptr){
+            return 0;
+        }else{
+            Root = Root->arr[s[i]-'a'];
+        }
+        ++i;
+    }
+    if(i==(int)s.size()){
+        return Root->counter;
+    }else{
+        return 0;
+    }
+}
+int main(void){
+#ifdef HELL_JUDGE
+    freopen("input","r",stdin);
+    freopen("output","w",stdout);
+    freopen("error","w",stderr);
+#endif 
+    int n; cin>>n;
+    root = new Node();
+    while(n--){
+        string query , st;
+        cin>>query >> st;
+        if(query == "find"){
+            cout<<get(st)<<'\n';
+        }else{
+            store(st);
+        }
+    }
+    return 0;
+}
