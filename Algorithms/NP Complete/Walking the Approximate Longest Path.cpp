@@ -46,21 +46,30 @@ const int MAXM = (int)1e5+100;
 const int MAXN = (int)1e5+100;
 const int MOD = (int)1e5+100;
 bitset<100000>visited;
+vector<int>cheating_ans;
 vector<int>in_deg(MAXN);
 vector<int>res;
 vector<vector<int>>graph;
+int degrade_factor = 90000;
 bool err = false;
 void dfs(int n){
+    if(degrade_factor < 1 ||(graph.size() > 100 && cheating_ans.size() > graph.size()/2) ){
+        return ;
+    }
     res.push_back(n);
     visited[n] = true;
+    if(rand()&1)
+        --degrade_factor;
     for(auto&itr:graph[n]){
-        if(err){return;}
         if(!visited[itr]){
             dfs(itr);
-        }else{
-            err = true;
         }
     }
+    if(cheating_ans.size() < res.size()){
+        cheating_ans = res; 
+    }
+    visited[n] = false;
+    res.pop_back();
     return ;
 }
 int main(void){
@@ -71,30 +80,22 @@ int main(void){
 #endif 
 //    auto initial_time = high_resolution_clock::now();
     int n,m; scanf("%d%d",&n,&m);
-    fill(in_deg.begin(), in_deg.begin()+10,0);
     graph.resize(n+1);
     visited.reset();
     int node = -1;
-    int max_in_deg = 0;
-    for(int i=0;i<n;++i){
+    for(int i=0;i<m;++i){
         int u,v; scanf("%d%d",&u,&v);
         graph[u].push_back(v);
         graph[v].push_back(u);
-        in_deg[u]++;
-        in_deg[v]++;
-        if(in_deg[u]>max_in_deg){
-            max_in_deg = in_deg[u];
-            node = u;
-        }
-        if(in_deg[v]>max_in_deg){
-            max_in_deg = in_deg[v];
-            node = v;
-        }
     }
-    dfs(node);
+    srand(time(NULL));
+    for(int i=1;i<=min(10,n) && degrade_factor;++i){
+        if(rand()&1)
+            dfs(i);
+    }
     puts("");
-    printf("%d\n",(int)res.size());
-    for(auto&itr:res){
+    printf("%d\n",(int)cheating_ans.size());
+    for(auto&itr:cheating_ans){
         printf("%d ",itr);
     }
     puts("");
