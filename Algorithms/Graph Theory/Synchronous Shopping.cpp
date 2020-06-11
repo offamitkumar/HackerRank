@@ -1,4 +1,7 @@
 //  Author : Amit Kumar 
+//
+//  IDEA : as there are only at max 10 fish are present , so just brute force and try all 
+//  possibilities and pic the best one. 
 
 //  #include <ext/pb_ds/assoc_container.hpp>
 //  #include <ext/pb_ds/tree_policy.hpp>
@@ -101,7 +104,7 @@ int main(void){
 #endif 
 //    auto initial_time = high_resolution_clock::now();
     scanf("%d %d %d",&n,&m, &k);
-    total_fish = (1 << k);
+    total_fish = (1 << k); 
     graph.resize(n+100);
     for(int i = 1;i<=n; ++i){
         int i_fish; scanf("%d" , &i_fish);
