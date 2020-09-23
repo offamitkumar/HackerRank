@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+
  
 constexpr unsigned exponent        = 31;
 constexpr unsigned two_to_exponent = 1u << exponent;
