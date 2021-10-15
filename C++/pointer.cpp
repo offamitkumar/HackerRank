@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include <math.h>
+#include <cmath>
 
 void update(int *a,int *b) {
-    // Complete this function   
-    int x = (*a+*b);
-    int y = abs(*a-*b);
-    *a = x;
-    *b = y; 
+    // Complete this function    
+    int tempA = *a;
+    int tempB = *b;
+    *a = tempA+tempB;
+    *b = abs(tempA - tempB);
 }
 
 int main() {
